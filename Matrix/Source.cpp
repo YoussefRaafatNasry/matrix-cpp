@@ -2,6 +2,8 @@
 
 int main() 
 {
-	Matrix<int> m(5, 5);
+	Matrix<int> m;
+	cin >> m;
+	cout << m;
 	return 0;
 }
