@@ -20,9 +20,23 @@ public:
 	Matrix(int, int, T*);
 	~Matrix();
 
+
 	/* GETTERS */
 	int get_rows();
 	int get_cols();
+
+
+	/* ARITHMETIC OPERATORS */
+	void operator=(Matrix<T>&);
+	Matrix<T> operator+(Matrix<T>&);
+	Matrix<T> operator-(Matrix<T>&);
+	Matrix<T> operator*(Matrix<T>&);
+
+	void operator=(T);
+	Matrix<T> operator+(T);
+	Matrix<T> operator-(T);
+	Matrix<T> operator*(T);
+
 
 	/* IO OPERATORS */
 	template <typename U>

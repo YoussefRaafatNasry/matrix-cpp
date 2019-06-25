@@ -42,10 +42,6 @@ Matrix<T>::Matrix(int rows, int cols, T* arr) : Matrix(rows, cols)
 template <class T>
 Matrix<T>::~Matrix()
 {
-	for (int i = 0; i < rows; i++) {
-		delete[] values[i];
-	}
-	delete[] values;
 }
 
 
@@ -63,6 +59,144 @@ template <class T>
 int Matrix<T>::get_cols()
 {
 	return cols;
+}
+
+
+/************************/
+/* ARITHMETIC OPERATORS */
+/************************/
+
+template <class T>
+void Matrix<T>::operator=(Matrix<T>& m)
+{
+	rows = m.rows;
+	cols = m.cols;
+	values = new T*[rows];
+	for (int i = 0; i < rows; i++)
+	{
+		values[i] = new T[cols];
+	}
+
+	for (int i = 0; i < m.rows; i++)
+	{
+		for (int j = 0; j < m.cols; j++)
+		{
+			values[i][j] = m.values[i][j];
+		}
+	}
+
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator+(Matrix<T>& m)
+{
+	Matrix<T> result(rows, cols);
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			result.values[i][j] = values[i][j] + m.values[i][j];
+		}
+	}
+
+	return result;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator-(Matrix<T>& m)
+{
+	Matrix<T> result(rows, cols);
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			result.values[i][j] = values[i][j] - m.values[i][j];
+		}
+	}
+
+	return result;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator*(Matrix<T>& m)
+{
+	Matrix<T> result(rows, cols);
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < m.cols; j++)
+		{
+			result.values[i][j] = 0;
+			for (int k = 0; k < cols; k++)
+			{
+				result.values[i][j] += values[i][k] * m.values[k][j];
+			}
+		}
+	}
+
+	return result;
+}
+
+template <class T>
+void Matrix<T>::operator=(T)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			values[i][j] = val;
+		}
+	}
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator+(T val)
+{
+	Matrix<T> result(rows, cols);
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			result.values[i][j] = values[i][j] + val;
+		}
+	}
+
+	return result;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator-(T val)
+{
+	Matrix<T> result(rows, cols);
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			result.values[i][j] = values[i][j] - val;
+		}
+	}
+
+	return result;
+}
+
+template <class T>
+Matrix<T> Matrix<T>::operator*(T)
+{
+	Matrix<T> result(rows, cols);
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			result.values[i][j] = values[i][j] * val;
+		}
+	}
+
+	return result;
 }
 
 
