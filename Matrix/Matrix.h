@@ -21,9 +21,15 @@ public:
 	~Matrix();
 
 
+	/* HELPERS */
+	void init();
+	void clean();
+
+
 	/* GETTERS */
 	int get_rows();
 	int get_cols();
+	T at(int, int);
 
 
 	/* ARITHMETIC OPERATORS */

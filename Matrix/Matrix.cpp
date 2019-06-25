@@ -7,11 +7,7 @@
 template <class T>
 Matrix<T>::Matrix(int rows, int cols) : rows(rows), cols(cols)
 {
-	values = new T*[rows];
-	for (int i = 0; i < rows; i++)
-	{
-		values[i] = new T[cols];
-	}
+	init();
 }
 
 template <class T>
@@ -46,6 +42,30 @@ Matrix<T>::~Matrix()
 
 
 /***********/
+/* HELPERS */
+/***********/
+
+template <class T>
+void Matrix<T>::init()
+{
+	values = new T*[rows];
+	for (int i = 0; i < rows; i++)
+	{
+		values[i] = new T[cols];
+	}
+}
+
+template<class T>
+void Matrix<T>::clean()
+{
+	for (int i = 0; i < rows; i++) {
+		delete[] values[i];
+	}
+	delete[] values;
+}
+
+
+/***********/
 /* GETTERS */
 /***********/
 
@@ -61,6 +81,12 @@ int Matrix<T>::get_cols()
 	return cols;
 }
 
+template <class T>
+T Matrix<T>::at(int row, int col)
+{
+	return values[row][cols];
+}
+
 
 /************************/
 /* ARITHMETIC OPERATORS */
@@ -71,11 +97,7 @@ void Matrix<T>::operator=(Matrix<T>& m)
 {
 	rows = m.rows;
 	cols = m.cols;
-	values = new T*[rows];
-	for (int i = 0; i < rows; i++)
-	{
-		values[i] = new T[cols];
-	}
+	init();
 
 	for (int i = 0; i < m.rows; i++)
 	{
@@ -84,7 +106,6 @@ void Matrix<T>::operator=(Matrix<T>& m)
 			values[i][j] = m.values[i][j];
 		}
 	}
-
 }
 
 template <class T>
@@ -212,13 +233,8 @@ istream& operator>>(istream& in, Matrix<U>& m)
 	cout << "Columns: ";
 	in >> m.cols;
 
-	m.values = new U*[m.rows];
-	for (int i = 0; i < m.rows; i++)
-	{
-		m.values[i] = new U[m.cols];
-	}
-
 	cout << "Values: " << endl;
+	m.init();
 	for (int i = 0; i < m.rows; i++)
 	{
 		for (int j = 0; j < m.cols; j++)
